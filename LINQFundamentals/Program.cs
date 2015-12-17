@@ -31,6 +31,16 @@ namespace LINQFundamentals
                          new XAttribute("Name", p.ProcessName),
                          new XAttribute("PID", p.Id))
                      ));
+            IEnumerable<int> pids =
+                from e in doc.Descendants("Process")
+                where e.Attribute("Name").Value == "devenv"
+                orderby (int) e.Attribute("PID") ascending
+                select (int) e.Attribute("PID");
+
+            foreach (var id in pids)
+            {
+                Console.WriteLine(id);
+            }
         }
 
         private static void GetVeggies()
